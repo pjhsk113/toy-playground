@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: local
+
+socialLogin:
+  provider:
+    google:
+      profileUrl: https://www.googleapis.com
+      uri: /oauth2/v3/userinfo
+    naver:
+      profileUrl: https://openapi.naver.com
+      uri: /v1/nid/me
+    kakao:
+      profileUrl: https://kapi.kakao.com
+      uri: /v2/user/me
+    apple:
+      keyUrl: https://appleid.apple.com
+      uri: /auth/keys
+
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/home
+
+jwt.secret: '0zLbVe6WUrCT+gHKJIPnaoH9rq9Y8+8Ju5+GQ+9pO3KRiwE+NYH+KjIlL6Dpy4wHdCYL8R6NK0ZBhDZX+scBWliHL8xMMVyrNea7hu7o3EXGXgKfK+RtS6nkb6Y5F3azajmqXKUUjtCWQqmnrRsKlCuf7x9P6uJwT45OlwDB+nFYaa8AFeiroEqHIN6nywVOSeCg4zL5MYGx35Mdym5qSThyF9S2/hTEiImeP5FgIOg0Fxzr66gy/ahgb8PvBl5edWjNuo2dBI3O8ZHovjj2pI8Q2TNzjHzOL7CyUciH8icDhRcZlexrMwGCPbLnFOIK6Uass0ZkbmhGaYllzi7QrhJ/9Sq9bRP5hqA3hu1TKw8l93kGE6yRtb98bGva9m+xpROEMJP64P2MMtEyBuVWHb9PTUORUtM0TKaLtOl7MXwV6IIfDBjukJABTJN5UGVsvVugFGtd16PGRyGNDti3rDLxWvlVS2lfZuSdzrcrZ42favIQY5oe6BfyZcGrRp3GxVHD0EEBOD+lnLQJ9NKfhSr+6okmNC90RFlInOub1wh5cYh1yadrlZPWTROvDPKlNn3vQrn+0RewmXCompvFehX5U0DLv2tKWqI4JGQvAgiSgx0NNchXXiShGunJScSUsiT1pJsPPyj6ayWQpzDkBANnKJcVCbjlxXLUo4Mt3T0='
+redirectUri: http://localhost:3000/home
+
+log:
+  slack:
+    enabled: true
+    webHookUrl: https://hooks.slack.com/services/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
+    channel: log-test
+  level: ERROR
