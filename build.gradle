@@ -1,19 +1,75 @@
 plugins {
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+group = 'com.damda'
+version = '1.1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
 }
 
-test {
+dependencies {
+    // ========================= Spring Framework Start =========================
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.security:spring-security-test'
+    // ========================= Spring Framework End =========================
+
+    // ========================= JJWT Start =========================
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    // ========================= JJWT Eed =========================
+
+
+    // ========================= JDBC Start =========================
+    compileOnly 'com.h2database:h2'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    // ========================= JDBC End =========================
+
+    // ========================= lombok Start =========================
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // ========================= lombok End =========================
+
+    // ========================= flyway Start =========================
+    implementation 'org.flywaydb:flyway-core'
+    // ========================= flyway End =========================
+
+    implementation 'eu.bitwalker:UserAgentUtils:1.21'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
+
+}
+
+tasks.named('test') {
+    outputs.dir snippetsDir
     useJUnitPlatform()
+}
+
+tasks.named('asciidoctor') {
+    inputs.dir snippetsDir
+    dependsOn test
 }
